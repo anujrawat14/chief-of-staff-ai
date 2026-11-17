@@ -3,8 +3,8 @@
 An executive email triage and delegation workspace built for **Personal / Executive Assistants (EAs)** and their **Executive Principals**. Powered by **Google Gemini**, **ChiefOfStaff.ai** classifies incoming email threads by reply ownership, extracts action items and meeting dates, drafts context-aware replies with mandatory human approval, and provides a distraction-free **Client View** for the executive.
 
 - **Live Application (Vercel):** [https://chief-of-staff-ai-lac.vercel.app](https://chief-of-staff-ai-lac.vercel.app)
-- **Backend API (Render):** `https://<your-render-service>.onrender.com/api/emails`
-- **Demo Walkthrough Video:** `<paste-your-loom-or-youtube-link-here>`
+- **Backend API (Render):** `https://chief-of-staff-ai-backend-noqp.onrender.com`
+
 
 ---
 
