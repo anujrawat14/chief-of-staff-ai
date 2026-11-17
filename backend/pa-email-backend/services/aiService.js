@@ -56,7 +56,6 @@ ${threadText}
 
         const data = JSON.parse(response.text);
 
-        // Flag low-confidence classifications for manual assistant review
         if (data.confidenceScore < 0.75) {
             data.responsibility = 'Needs Review';
             data.aiReasoning = `Low confidence (${Math.round(data.confidenceScore * 100)}%): ${data.aiReasoning}`;
@@ -99,12 +98,18 @@ ${threadText}
 Write only the email body (no subject line, no markdown placeholders).
 `;
 
-    const response = await ai.models.generateContent({
-        model: MODEL,
-        contents: prompt
-    });
+    try {
+        const response = await ai.models.generateContent({
+            model: MODEL,
+            contents: prompt
+        });
 
-    return response.text.trim();
+        return response.text.trim();
+    } catch (error) {
+        console.error('AI Draft Error:', error.message);
+        const lastSender = conversation.messages[conversation.messages.length - 1]?.senderName || 'there';
+        return `Hi ${lastSender},\n\nThank you for reaching out regarding "${conversation.subject}". I am coordinating this on Arjun's behalf and will follow up with confirmed details shortly.\n\nBest regards,\nAnuj\nExecutive Assistant`;
+    }
 }
 
 export async function queryInbox(question, conversations) {
@@ -131,10 +136,15 @@ ${JSON.stringify(compactInbox, null, 2)}
 User Question: ${question}
 `;
 
-    const response = await ai.models.generateContent({
-        model: MODEL,
-        contents: prompt
-    });
+    try {
+        const response = await ai.models.generateContent({
+            model: MODEL,
+            contents: prompt
+        });
 
-    return response.text.trim();
+        return response.text.trim();
+    } catch (error) {
+        console.error('AI Copilot Error:', error.message);
+        return 'Unable to reach Gemini right now. Please check your active Assistant to Reply and Client to Reply queues for pending items.';
+    }
 }
