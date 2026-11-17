@@ -7,7 +7,7 @@ const MODEL = 'gemini-2.5-flash';
 
 export async function classifyThread(subject, messages) {
     const threadText = messages
-        .map((m) => `[${m.role.toUpperCase()} - ${m.senderName} <${m.senderEmail}>]: ${m.body}`)
+        .map((m) => `[${m.role.toUpperCase()}] ${m.senderName} <${m.senderEmail}>: ${m.body}`)
         .join('\n\n');
 
     const prompt = `
@@ -40,7 +40,7 @@ ${threadText}
                         },
                         confidenceScore: { type: Type.NUMBER },
                         aiReasoning: { type: Type.STRING },
-                        aiSummary: { type: String },
+                        aiSummary: { type: Type.STRING },
                         extractedAction: { type: Type.STRING },
                         extractedDate: { type: Type.STRING },
                         category: {
